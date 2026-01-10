@@ -1,0 +1,7 @@
+spring:
+  mongodb:
+    uri: mongodb://localhost/test_db
+
+logging:
+  level:
+    "[com.bookbox.neuromancien]": DEBUG
