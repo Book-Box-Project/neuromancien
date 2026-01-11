@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserSigninInputDTO {
-
+public class SignupRequestDTO {
+    @NotBlank
+    private String username;
+    @NotBlank
+    private String password;
     @NotBlank
     @Email
     private String email;
-
-    @NotBlank
-    private String password;
 }

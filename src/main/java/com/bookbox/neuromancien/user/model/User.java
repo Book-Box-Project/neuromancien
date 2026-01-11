@@ -1,4 +1,4 @@
-package com.bookbox.neuromancien.auth.model;
+package com.bookbox.neuromancien.user.model;
 
 import java.time.LocalDateTime;
 

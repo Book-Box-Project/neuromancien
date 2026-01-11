@@ -1,6 +1,7 @@
 spring:
   application:
     name: neuromancien
+    version: @project.version@
   mongodb:
     uri: ${MONGODB_URI:mongodb://localhost:27017/test_db}
     database: ${MONGODB_DATABASE:test_db}
