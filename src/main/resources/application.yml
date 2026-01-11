@@ -21,3 +21,9 @@ logging:
 jwt:
   secret: ${JWT_SECRET:default_jwt_secret_key}
   expiration-ms: ${JWT_EXPIRATION_MS:3600000}
+
+google:
+  books:
+    api: 
+      url: https://www.googleapis.com/books/v1/
+      key: ${GOOGLE_BOOKS_API_KEY:default_google_books_api_key}
