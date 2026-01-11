@@ -25,5 +25,5 @@ jwt:
 google:
   books:
     api: 
-      url: https://www.googleapis.com/books/v1/
+      url: ${GOOGLE_BOOKS_API_URL:https://www.googleapis.com/books/v1}
       key: ${GOOGLE_BOOKS_API_KEY:default_google_books_api_key}
