@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bookbox.neuromancien.auth.dto.UserSigninInputDTO;
+import com.bookbox.neuromancien.auth.dto.UserSigninOutputDTO;
 import com.bookbox.neuromancien.auth.dto.UserSignupInputDTO;
 import com.bookbox.neuromancien.auth.dto.UserSignupOutputDTO;
 import com.bookbox.neuromancien.auth.service.UserService;
@@ -28,5 +30,12 @@ public class UserController {
             @Valid @RequestBody UserSignupInputDTO userSignupInputDTO) {
         UserSignupOutputDTO userSignupOutputDTO = userService.signupUser(userSignupInputDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(userSignupOutputDTO);
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<UserSigninOutputDTO> signinUser(
+            @Valid @RequestBody UserSigninInputDTO userSigninInputDTO) {
+        UserSigninOutputDTO userSigninOutputDTO = userService.signinUser(userSigninInputDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(userSigninOutputDTO);
     }
 }

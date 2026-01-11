@@ -16,3 +16,7 @@ logging:
   level:
     "[org.springframework.data.mongodb]": DEBUG
     "[com.bookbox.neuromancien]": DEBUG
+
+jwt:
+  secret: ${JWT_SECRET:default_jwt_secret_key}
+  expiration-ms: ${JWT_EXPIRATION_MS:3600000}

@@ -17,6 +17,14 @@ import com.bookbox.neuromancien.common.dto.ValidationErrorResponseOutputDTO;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<ErrorResponseOutputDTO> handleInvalidCredentials(InvalidCredentialsException ex) {
+        ErrorResponseOutputDTO response = new ErrorResponseOutputDTO(
+                ex.getMessage(),
+                LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+    }
+
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponseOutputDTO> handleResourceNotFound(ResourceNotFoundException ex) {
         ErrorResponseOutputDTO response = new ErrorResponseOutputDTO(
