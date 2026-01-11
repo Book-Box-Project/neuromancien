@@ -1,14 +1,15 @@
 package com.bookbox.neuromancien;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.mongodb.autoconfigure.MongoAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
+
+import com.bookbox.neuromancien.config.TestContainersConfiguration;
 
 @SpringBootTest
 @ActiveProfiles("test")
-@EnableAutoConfiguration(exclude = MongoAutoConfiguration.class)
+@Import(TestContainersConfiguration.class)
 class NeuromancienApplicationTests {
 
 	@Test

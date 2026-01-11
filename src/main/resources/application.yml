@@ -1,9 +1,10 @@
 spring:
   application:
     name: neuromancien
+    version: @project.version@
   mongodb:
-    uri: ${MONGODB_URI}
-    database: ${MONGODB_DATABASE}
+    uri: ${MONGODB_URI:mongodb://localhost:27017/test_db}
+    database: ${MONGODB_DATABASE:test_db}
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:test}
 
@@ -16,3 +17,7 @@ logging:
   level:
     "[org.springframework.data.mongodb]": DEBUG
     "[com.bookbox.neuromancien]": DEBUG
+
+jwt:
+  secret: ${JWT_SECRET:default_jwt_secret_key}
+  expiration-ms: ${JWT_EXPIRATION_MS:3600000}
