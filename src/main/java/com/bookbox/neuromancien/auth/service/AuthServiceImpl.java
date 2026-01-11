@@ -3,35 +3,35 @@ package com.bookbox.neuromancien.auth.service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.bookbox.neuromancien.auth.dto.UserSigninInputDTO;
-import com.bookbox.neuromancien.auth.dto.UserSigninOutputDTO;
-import com.bookbox.neuromancien.auth.dto.UserSignupInputDTO;
-import com.bookbox.neuromancien.auth.dto.UserSignupOutputDTO;
-import com.bookbox.neuromancien.auth.mapper.UserMapper;
-import com.bookbox.neuromancien.auth.model.User;
-import com.bookbox.neuromancien.auth.repository.UserRepository;
+import com.bookbox.neuromancien.auth.dto.SigninRequestDTO;
+import com.bookbox.neuromancien.auth.dto.SigninResponseDTO;
+import com.bookbox.neuromancien.auth.dto.SignupRequestDTO;
+import com.bookbox.neuromancien.auth.dto.SignupResponseDTO;
+import com.bookbox.neuromancien.auth.mapper.AuthMapper;
 import com.bookbox.neuromancien.common.exception.DuplicateResourceException;
 import com.bookbox.neuromancien.common.exception.InvalidCredentialsException;
 import com.bookbox.neuromancien.common.security.JwtService;
+import com.bookbox.neuromancien.user.model.User;
+import com.bookbox.neuromancien.user.repository.UserRepository;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
-    private final UserMapper userMapper;
+    private final AuthMapper authMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder,
+    public AuthServiceImpl(UserRepository userRepository, AuthMapper authMapper, PasswordEncoder passwordEncoder,
             JwtService jwtService) {
         this.userRepository = userRepository;
-        this.userMapper = userMapper;
+        this.authMapper = authMapper;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
     }
 
     @Override
-    public UserSignupOutputDTO signupUser(UserSignupInputDTO userSignupInputDTO) {
+    public SignupResponseDTO signup(SignupRequestDTO userSignupInputDTO) {
         if (userRepository.existsByEmail(userSignupInputDTO.getEmail())) {
             throw new DuplicateResourceException("Email already exists");
         }
@@ -45,20 +45,20 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(userSignupInputDTO.getPassword()));
         user.setEmail(userSignupInputDTO.getEmail());
         User savedUser = userRepository.save(user);
-        return userMapper.toSignupOutputDTO(savedUser);
+        return authMapper.toSignupResponseDTO(savedUser);
     }
 
     @Override
-    public UserSigninOutputDTO signinUser(UserSigninInputDTO userSigninInputDTO) {
+    public SigninResponseDTO signin(SigninRequestDTO userSigninInputDTO) {
         User user = userRepository.findByEmail(userSigninInputDTO.getEmail())
-                .orElseThrow(() -> new InvalidCredentialsException("Invalid email or password"));
+                .orElseThrow(() -> new InvalidCredentialsException());
 
         if (!passwordEncoder.matches(userSigninInputDTO.getPassword(), user.getPassword())) {
-            throw new InvalidCredentialsException("Invalid email or password");
+            throw new InvalidCredentialsException();
         }
 
         String token = jwtService.generateToken(user.getEmail());
 
-        return new UserSigninOutputDTO(token, user.getEmail(), user.getUsername());
+        return authMapper.toSigninResponseDTO(token, user);
     }
 }
