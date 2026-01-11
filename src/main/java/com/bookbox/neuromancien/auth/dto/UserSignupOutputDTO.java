@@ -1,7 +1,5 @@
 package com.bookbox.neuromancien.auth.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,12 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRegisterInputDTO {
-    @NotBlank
+public class UserSignupOutputDTO {
+    private String message;
+    private String id;
     private String username;
-    @NotBlank
-    private String password;
-    @NotBlank
-    @Email
     private String email;
 }

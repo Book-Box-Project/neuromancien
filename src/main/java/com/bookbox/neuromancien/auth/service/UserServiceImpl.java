@@ -3,8 +3,8 @@ package com.bookbox.neuromancien.auth.service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.bookbox.neuromancien.auth.dto.UserOutputDTO;
-import com.bookbox.neuromancien.auth.dto.UserRegisterInputDTO;
+import com.bookbox.neuromancien.auth.dto.UserSignupInputDTO;
+import com.bookbox.neuromancien.auth.dto.UserSignupOutputDTO;
 import com.bookbox.neuromancien.auth.mapper.UserMapper;
 import com.bookbox.neuromancien.auth.model.User;
 import com.bookbox.neuromancien.auth.repository.UserRepository;
@@ -24,20 +24,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserOutputDTO registerUser(UserRegisterInputDTO userRegisterInputDTO) {
-        if (userRepository.existsByEmail(userRegisterInputDTO.getEmail())) {
+    public UserSignupOutputDTO signupUser(UserSignupInputDTO userSignupInputDTO) {
+        if (userRepository.existsByEmail(userSignupInputDTO.getEmail())) {
             throw new DuplicateResourceException("Email already exists");
         }
 
-        if (userRepository.existsByUsername(userRegisterInputDTO.getUsername())) {
+        if (userRepository.existsByUsername(userSignupInputDTO.getUsername())) {
             throw new DuplicateResourceException("Username already exists");
         }
 
         User user = new User();
-        user.setUsername(userRegisterInputDTO.getUsername());
-        user.setPassword(passwordEncoder.encode(userRegisterInputDTO.getPassword()));
-        user.setEmail(userRegisterInputDTO.getEmail());
+        user.setUsername(userSignupInputDTO.getUsername());
+        user.setPassword(passwordEncoder.encode(userSignupInputDTO.getPassword()));
+        user.setEmail(userSignupInputDTO.getEmail());
         User savedUser = userRepository.save(user);
-        return userMapper.toOutputDTO(savedUser);
+        return userMapper.toSignupOutputDTO(savedUser);
     }
 }
