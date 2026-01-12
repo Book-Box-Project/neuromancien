@@ -14,16 +14,14 @@ import com.bookbox.neuromancien.auth.dto.SignupResponseDTO;
 import com.bookbox.neuromancien.auth.service.AuthService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
-
-    public AuthController(AuthService authService) {
-        this.authService = authService;
-    }
 
     @PostMapping("/signup")
     public ResponseEntity<SignupResponseDTO> signup(
