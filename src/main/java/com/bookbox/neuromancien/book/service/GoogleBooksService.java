@@ -11,7 +11,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.bookbox.neuromancien.book.dto.BookDetailResponse;
 import com.bookbox.neuromancien.book.dto.BookSearchResult;
-import com.bookbox.neuromancien.book.dto.GoogleBookItem;
+import com.bookbox.neuromancien.book.dto.GoogleBookDetailItem;
 import com.bookbox.neuromancien.book.dto.GoogleBooksResponse;
 import com.bookbox.neuromancien.book.mapper.GoogleBookMapper;
 import com.bookbox.neuromancien.common.exception.ResourceNotFoundException;
@@ -77,7 +77,7 @@ public class GoogleBooksService {
                     .queryParam(PARAM_API_KEY, apiKey)
                     .toUriString();
 
-            GoogleBookItem item = restTemplate.getForObject(url, GoogleBookItem.class);
+            GoogleBookDetailItem item = restTemplate.getForObject(url, GoogleBookDetailItem.class);
 
             if (item == null) {
                 throw new ResourceNotFoundException("Book not found with id: " + externalId);

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.bookbox.neuromancien.book.dto.BookDetailResponse;
 import com.bookbox.neuromancien.book.dto.BookSearchResult;
+import com.bookbox.neuromancien.book.dto.GoogleBookDetailItem;
 import com.bookbox.neuromancien.book.dto.GoogleBookItem;
 
 @Component
@@ -22,8 +23,8 @@ public class GoogleBookMapper {
                 .build();
     }
 
-    public BookDetailResponse mapToDetailResponse(GoogleBookItem item) {
-        GoogleBookItem.VolumeInfo info = item.getVolumeInfo();
+    public BookDetailResponse mapToDetailResponse(GoogleBookDetailItem item) {
+        GoogleBookDetailItem.VolumeInfo info = item.getVolumeInfo();
 
         return BookDetailResponse.builder()
                 .externalId(item.getId())
@@ -31,7 +32,7 @@ public class GoogleBookMapper {
                 .authors(info.getAuthors())
                 .publishedDate(info.getPublishedDate())
                 .description(info.getDescription())
-                .coverUrl(info.getImageLinks() != null ? info.getImageLinks().getThumbnail() : null)
+                .coverUrl(info.getImageLinks() != null ? info.getImageLinks().getMedium() : null)
                 .categories(info.getCategories())
                 .pageCount(info.getPageCount())
                 .build();
