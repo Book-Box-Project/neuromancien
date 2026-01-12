@@ -9,6 +9,16 @@
       "name": "jwt.expiration-ms",
       "type": "java.lang.Long",
       "description": "Expiration time in milliseconds for JWT tokens."
+    },
+    {
+      "name": "google.books.api.url",
+      "type": "java.lang.String",
+      "description": "Google api base URL for Books API"
+    },
+    {
+      "name": "google.books.api.key",
+      "type": "java.lang.String",
+      "description": "Google API key for Books API"
     }
   ]
 }

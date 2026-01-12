@@ -1,0 +1,21 @@
+package com.bookbox.neuromancien.book.dto;
+
+import java.util.List;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class BookSearchResult {
+    private String externalId;
+    private String title;
+    private List<String> authors;
+    private String publishedDate;
+    private String coverUrl;
+    private List<String> categories;
+}
