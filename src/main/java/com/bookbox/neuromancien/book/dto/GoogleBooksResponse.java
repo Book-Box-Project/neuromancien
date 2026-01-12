@@ -9,6 +9,6 @@ import lombok.Data;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GoogleBooksResponse {
-    private Integer totalItems;
+    private Long totalItems;
     private List<GoogleBookItem> items;
 }

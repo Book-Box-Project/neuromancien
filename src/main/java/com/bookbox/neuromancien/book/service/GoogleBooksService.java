@@ -25,10 +25,12 @@ public class GoogleBooksService {
     private static final String VOLUMES_ENDPOINT = "/volumes";
 
     private static final String PARAM_QUERY = "q";
+    private static final String PARAM_PRINT_TYPE = "printType";
+    private static final String VALUE_PRINT_TYPE = "books";
     private static final String PARAM_MAX_RESULTS = "maxResults";
     private static final String PARAM_API_KEY = "key";
 
-    private static final int DEFAULT_MAX_RESULTS = 10;
+    private static final int DEFAULT_MAX_RESULTS = 40;
 
     private final RestTemplate restTemplate;
     private final GoogleBookMapper googleBookMapper;
@@ -44,8 +46,10 @@ public class GoogleBooksService {
             String url = UriComponentsBuilder
                     .fromUriString(apiUrl + VOLUMES_ENDPOINT)
                     .queryParam(PARAM_QUERY, query)
+                    .queryParam(PARAM_PRINT_TYPE, VALUE_PRINT_TYPE)
                     .queryParam(PARAM_MAX_RESULTS, maxResults != null ? maxResults : DEFAULT_MAX_RESULTS)
                     .queryParam(PARAM_API_KEY, apiKey)
+                    .build(false)
                     .toUriString();
 
             log.info("Searching books with query: {}", query);
