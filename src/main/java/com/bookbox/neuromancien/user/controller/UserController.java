@@ -9,15 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bookbox.neuromancien.user.dto.MeResponseDTO;
 import com.bookbox.neuromancien.user.service.UserService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping("/me")
     public ResponseEntity<MeResponseDTO> getCurrentUser(Authentication authentication) {
