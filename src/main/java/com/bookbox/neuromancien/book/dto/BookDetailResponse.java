@@ -11,11 +11,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookSearchResult {
+public class BookDetailResponse {
     private String externalId;
     private String title;
     private List<String> authors;
     private String publishedDate;
+    private String description;
     private String coverUrl;
     private List<String> categories;
+    private Integer pageCount;
 }

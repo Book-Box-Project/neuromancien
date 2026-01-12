@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.bookbox.neuromancien.book.dto.BookDetailResponse;
 import com.bookbox.neuromancien.book.dto.BookSearchResult;
 import com.bookbox.neuromancien.book.dto.GoogleBookItem;
 import com.bookbox.neuromancien.book.dto.GoogleBooksResponse;
 import com.bookbox.neuromancien.book.mapper.GoogleBookMapper;
+import com.bookbox.neuromancien.common.exception.ResourceNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +54,6 @@ public class GoogleBooksService {
                     .build(false)
                     .toUriString();
 
-            log.info("Searching books with query: {}", query);
             GoogleBooksResponse response = restTemplate.getForObject(url, GoogleBooksResponse.class);
 
             if (response == null || response.getItems() == null) {
@@ -69,21 +70,20 @@ public class GoogleBooksService {
         }
     }
 
-    public BookSearchResult getBookById(String externalId) {
+    public BookDetailResponse getBookById(String externalId) {
         try {
             String url = UriComponentsBuilder
                     .fromUriString(apiUrl + VOLUMES_ENDPOINT + "/" + externalId)
                     .queryParam(PARAM_API_KEY, apiKey)
                     .toUriString();
 
-            log.info("Fetching book with id: {}", externalId);
             GoogleBookItem item = restTemplate.getForObject(url, GoogleBookItem.class);
 
             if (item == null) {
-                throw new RuntimeException("Book not found with id: " + externalId);
+                throw new ResourceNotFoundException("Book not found with id: " + externalId);
             }
 
-            return googleBookMapper.mapToSearchResult(item);
+            return googleBookMapper.mapToDetailResponse(item);
 
         } catch (Exception e) {
             log.error("Error fetching book: {}", e.getMessage());
